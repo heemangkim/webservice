@@ -1,5 +1,7 @@
 package com.webservice.web;
 
+import com.webservice.config.auth.LoginUser;
+import com.webservice.config.auth.dto.SessionUser;
 import com.webservice.service.PostsService;
 import com.webservice.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
@@ -15,8 +19,11 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(@LoginUser SessionUser user, Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
 
         return "index";
     }

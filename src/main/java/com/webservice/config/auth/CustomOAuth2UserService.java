@@ -41,11 +41,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getUserInfoEndpoint()
                 .getUserNameAttributeName();
 
-        //
+        //OAuth2UserService 를 통해 가져온 OAuth2User의 Attribute를 담는 클래스이다.
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         // 세션 저장
         User user = saveOrUpdate(attributes);
+
         httpSession.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(
