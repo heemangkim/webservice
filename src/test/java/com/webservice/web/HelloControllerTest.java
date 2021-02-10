@@ -1,14 +1,17 @@
 package com.webservice.web;
 
-import org.apache.catalina.security.SecurityConfig;
+import com.webservice.config.auth.CustomOAuth2UserService;
+import com.webservice.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
@@ -18,12 +21,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
+// WebMvcTest => 컨트롤러가 정상적으로 동작하는지 테스트
 @WebMvcTest(controllers = HelloController.class,
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
         }
 )
 public class HelloControllerTest {
+
+    @MockBean
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
     private MockMvc mvc;
