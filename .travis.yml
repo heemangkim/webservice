@@ -30,7 +30,7 @@ deploy:
     bucket: hm-springboot-webservice-build # S3 버킷
     region: ap-northeast-2
     skip_cleanup: true
-    acl: public_read
+    acl: private
     local_dir: deploy # before_deploy에서 생성한 디렉토리
     wait-until-deployed: true
 #    on:
