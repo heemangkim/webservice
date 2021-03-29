@@ -16,7 +16,7 @@ public class MyHomeController {
 
     private final MyHomeService myHomeService;
 
-    @PostMapping("/login")
+    @PostMapping("/loginAction")
     public Object login(HttpServletRequest request, HttpServletResponse response, @RequestBody RequestLogin body) {
 
         return myHomeService.loginAction(request, response, body).getResponse();
